@@ -25,12 +25,15 @@ class AnimeParser:
 		html = urllib.request.urlopen(anime.url)
 		soup = BeautifulSoup(html)
 		vintageDiv = soup.find('div',{'id':'infotype-7'})
-		if ( vintageDiv.find('div') != None ):
+		if ( vintageDiv == None):
+			anime.year = str('Unknown')
+		elif( vintageDiv.find('div') != None ):
 			date = str(vintageDiv.find('div').text)
+			anime.year = int(date[:4])
 		else:
 			date = str(vintageDiv.find('span').text)
+			anime.year = int(date[:4])
 
-		anime.year = int(date[:4])
 		
 def run():
 	ap = AnimeParser()
